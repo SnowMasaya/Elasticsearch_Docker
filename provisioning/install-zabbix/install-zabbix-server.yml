@@ -1,0 +1,10 @@
+- hosts: zabbix-server
+  sudo: yes
+  roles:
+     - { role: geerlingguy.mysql }
+     - { role: geerlingguy.apache }
+     - { role: dj-wasabi.zabbix-server, 
+           zabbix_url: 54.64.137.145,
+           zabbix_timezone: Asia/Tokyo,
+           database_type: mysql,
+           database_type_long: mysql }

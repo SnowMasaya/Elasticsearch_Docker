@@ -1,0 +1,31 @@
+{
+"order": 0,
+  "template": "contents-*",
+  "settings": {
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "0"
+    }
+  },
+  "mappings": {
+    "contents": {
+      "_source": {
+        "enabled": true
+      },
+      "_all": {
+        "analyzer": "ja",
+        "enabled": true
+      },
+      "properties": {
+        "body_text": {
+          "search_analyzer": "ja",
+          "analyzer": "ja_ngram",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "aliases": {
+
+  }
+}
