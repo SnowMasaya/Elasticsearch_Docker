@@ -71,7 +71,7 @@ TAG=$(shell echo $$CIRCLE_SHA1 | cut -c 1-7)
 # Define linked containers (these name should match keys in
 # fig.ml). The test & test-ci targets wil be run with all links set
 # correctly.
-DOCKER_RUN_ELASTIC_SEARCH:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -i -t $(REPO_NAME)/elasticsearch /bin/sh -c ". /usr/share/elasticsearch/.bash_profile && bash"
+DOCKER_RUN_ELASTIC_SEARCH:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -i -t $(REPO_NAME)/elasticsearch bash
 
 # Wildcard rule to build an image from a file inside dockerfiles/
 # Use the tasks like any other dependency. Order may be controller
