@@ -17,9 +17,9 @@ sudo /etc/init.d/elasticsearch start &
 sleep 10s
 curl -XPUT localhost:9200/_template/contents --data-binary "@config/elastic_index_template.json"
 sudo /etc/init.d/elasticsearch stop &
-sleep 2s
+sleep 10s
 elasticsearch -Des.security.manager.enabled=false &
-sleep 8s
+sleep 10s
 # Register command
 echo Register
 curl -X POST http://localhost:9200/contents-20160111/contents/1  -d '
@@ -34,4 +34,6 @@ curl -XGET 'localhost:9200/contents-20160111/contents/_search?pretty' -d'
 {
  "query":{"match":{"body_text":"Ubuntu"}}
 }'
+# Check the regist data
+curl 'localhost:9200/_cat/indices?v'
 # -----------------------------------------------------------------

@@ -18,8 +18,8 @@
       },
       "properties": {
         "body_text": {
-          "search_analyzer": "ja",
-          "analyzer": "ja_ngram",
+          "search_analyzer": "ja_synonym",
+          "analyzer": "ja",
           "type": "string"
         }
       }

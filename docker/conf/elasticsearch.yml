@@ -137,7 +137,6 @@ index:
                     lowercase,
                     cjk_width,
                     katakana_stemmer,
-                    kuromoji_neologd_part_of_speech,
                     stopword
                 ]
             ja_synonym:
