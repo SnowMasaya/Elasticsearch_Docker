@@ -3,8 +3,6 @@
 # [Masaya Ogushi] Elastic First Setting
 #
 #          library for Unix shell scripts.
-#          Reference
-#              https://medium.com/hello-elasticsearch/elasticsearch-6d69b6ff5c26#.94u8w1vgp
 #
 # ------------------------------------------------------------------
 
@@ -12,28 +10,32 @@
 #  SCRIPT LOGIC GOES HERE
 ROOT_DIR=`pwd`
 
-# Setting Elastic Search
+# Elasticsearchの起動
 sudo /etc/init.d/elasticsearch start &
 sleep 10s
-curl -XPUT localhost:9200/_template/contents --data-binary "@config/elastic_index_template.json"
+# 文書登録用テンプレートの反映
+curl -XPUT localhost:9200/_template/contents --data-binary \
+     "@config/elastic_index_template.json"
 sudo /etc/init.d/elasticsearch stop &
 sleep 10s
+# テンプートの反映のために再起動
 elasticsearch -Des.security.manager.enabled=false &
 sleep 10s
-# Register command
 echo Register
+# 文書登録処理
 curl -X POST http://localhost:9200/contents-20160111/contents/1  -d '
 {
-    "body_text" : "今回、作成したUbuntuでのDocker環境の構築方法です。他のディストリビューションやバージョンを試したい方は下記をご参照ください。"
+    "body_text" : "今回、作成したUbuntuでのDocker環境の構築方法です。"
 }
 '
-# Search Command
 sleep 1s
 echo Search
+# 文書検索処理
 curl -XGET 'localhost:9200/contents-20160111/contents/_search?pretty' -d'
 {
  "query":{"match":{"body_text":"Ubuntu"}}
 }'
-# Check the regist data
+# 登録された文書の確認
 curl 'localhost:9200/_cat/indices?v'
 # -----------------------------------------------------------------
+
