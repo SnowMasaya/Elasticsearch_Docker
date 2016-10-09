@@ -1,3 +1,0 @@
-mysql_packages:
-  - MySQL-python
-  - perl-DBD-MySQL

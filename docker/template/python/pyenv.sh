@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------
-# [Masaya Ogushi] Docker image rm script
+# [Masaya Ogushi] pyenv regist script
 #
 #          library for Unix shell scripts.
 #          Usage
@@ -11,8 +11,8 @@
 # ------------------------------------------------------------------
 
 # -- Body ---------------------------------------------------------
-#  SCRIPT LOGIC GOES HERE
-docker stop `docker ps -a -q`
-docker rm `docker ps -a -q`
-docker rmi $(docker images | awk '/^<none>/ { print $3 }')
-# -----------------------------------------------------------------
+export PYENV_ROOT="/usr/local/pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+# -----------------------------------------------------------

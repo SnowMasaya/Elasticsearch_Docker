@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------
-# [Masaya Ogushi] Docker image rm script
+# [Masaya Ogushi] Pyenv Setting Script
 #
 #          library for Unix shell scripts.
 #          Usage
@@ -11,8 +11,17 @@
 # ------------------------------------------------------------------
 
 # -- Body ---------------------------------------------------------
-#  SCRIPT LOGIC GOES HERE
-docker stop `docker ps -a -q`
-docker rm `docker ps -a -q`
-docker rmi $(docker images | awk '/^<none>/ { print $3 }')
+
+Pyenv=pyenv
+
+dir=/usr/local/
+
+if [ -e $dir$Pyenv ]; then
+    echo "$file found."
+else
+    git clone git://github.com/yyuu/pyenv.git /usr/local/pyenv
+    mkdir /usr/local/pyenv/shims
+    mkdir /usr/local/pyenv/versions
+fi
 # -----------------------------------------------------------------
+

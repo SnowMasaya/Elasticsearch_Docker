@@ -1,3 +1,0 @@
-dj-wasabi.zabbix-agent
-dj-wasabi.zabbix-server
-geerlingguy.mysql
