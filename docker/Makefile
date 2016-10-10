@@ -66,7 +66,7 @@ TAG=$(shell echo $$CIRCLE_SHA1 | cut -c 1-7)
 
 .DEFAULT_GOAL:= build
 
-.PHONY: pull export import environment test test-ci test-crawler test-crawler-total test-elastic-search test-page teardown
+.PHONY: pull export import environment test test-elasticsearch test-elastic-search_parallel teardown
 
 # Define linked containers (these name should match keys in
 # fig.ml). The test & test-ci targets wil be run with all links set
@@ -98,7 +98,7 @@ test:
 test-elastic-search: images/elasticsearch
 	$(DOCKER_RUN_ELASTIC_SEARCH)
 
-test-elastic-search: images/elasticsearch_parallel
+test-elastic-search_parallel: images/elasticsearch_parallel
 	$(DOCKER_RUN_ELASTIC_SEARCH_PARALLEL)
 
 teardown:

@@ -50,18 +50,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   vb.gui = true
   #
   #Host to Guest
-  config.vm.synced_folder "/Users/masayaogushi/Desktop/Study/elastic-search-docker", "/home/vagrant/elastic-search-docker", type: "rsync",
+  config.vm.synced_folder "./", "/home/vagrant/elastic-search-docker_parallel", type: "rsync",
 
    rsync__exclude: [
       ".idea/",
+      "disk.vdi",
+      ".vagrant",
     ]
   # memory setting 1024MB
   config.vm.provider "virtualbox" do |vm|
-    vm.memory = 6024
+    vm.memory = 10024
     vm.cpus = 4 
   end
   #Guest to Host
-  #config.vm.synced_folder "/Users/masayaogushi/Desktop/Study/elastic-search-docker", "/home/vagrant/elastic-search-docker", type: "rsync_pull",
+  #config.vm.synced_folder "./python/Data/split_data", "/usr/share/elasticsearch/python/Data/split_data", type: "rsync",
   #  rsync__exclude: [
   #    ".idea/",
   #    ".git/",

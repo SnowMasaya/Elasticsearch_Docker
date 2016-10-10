@@ -5,21 +5,17 @@
 #          library for Unix shell scripts.
 #
 # ------------------------------------------------------------------
-
 # -- Body ---------------------------------------------------------
 #  SCRIPT LOGIC GOES HERE
 ROOT_DIR=`pwd`
 
 # Elasticsearchの起動
-sudo /etc/init.d/elasticsearch start &
+sudo /etc/init.d/elasticsearch start
 sleep 10s
 # 文書登録用テンプレートの反映
 curl -XPUT localhost:9200/_template/contents --data-binary \
      "@config/elastic_index_template.json"
-sudo /etc/init.d/elasticsearch stop &
-sleep 10s
-# テンプートの反映のために再起動
-elasticsearch -Des.security.manager.enabled=false &
+sudo /etc/init.d/elasticsearch restart
 sleep 10s
 echo Register
 # 文書登録処理

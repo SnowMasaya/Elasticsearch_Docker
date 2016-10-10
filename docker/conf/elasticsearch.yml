@@ -93,6 +93,8 @@ network.host: 0.0.0.0
 # Require explicit names when deleting indices:
 #
 # action.destructive_requires_name: true
+# ---------------------------------- Gzip Data -------------------------------
+http.compression: true
 # ---------------------------------- Index -----------------------------------
 # Elasticsearchに登録する文書のための設定
 index:
@@ -123,37 +125,37 @@ index:
                 max_gram: 2 
                 token_chars: [letter, digit]
         analyzer:
-	        ja:
-                    alias: [index_analyzer]
-                    type: custom
-                    tokenizer: default_ja_tokenizer
-                    char_filter: [
-                        html_strip,
-                        kuromoji_neologd_iteration_mark,
-                        icu_normalizer
-                    ]
-                    filter: [
-                        pos_filter,
-                        lowercase,
-                        cjk_width,
-                        katakana_stemmer,
-                        stopword
-                    ]
+            ja:
+                alias: [index_analyzer]
+                type: custom
+                tokenizer: default_ja_tokenizer
+                char_filter: [
+                    html_strip,
+                    kuromoji_neologd_iteration_mark,
+                    icu_normalizer
+                ]
+                filter: [
+                    pos_filter,
+                    lowercase,
+                    cjk_width,
+                    katakana_stemmer,
+                    stopword
+                ]
             ja_synonym:
-               alias: [search_analyzer]
-               type: custom
-               tokenizer: default_ja_tokenizer
-               char_filter: [
-                   html_strip,
-                   kuromoji_neologd_iteration_mark
-               ]
-               filter: [
-                   lowercase,
-                   cjk_width,
-                   katakana_stemmer,
-                   kuromoji_neologd_part_of_speech,
-                   synonym,
-                   stopword
+                alias: [search_analyzer]
+                type: custom
+                tokenizer: default_ja_tokenizer
+                char_filter: [
+                    html_strip,
+                    kuromoji_neologd_iteration_mark
+                ]
+                filter: [
+                    lowercase,
+                    cjk_width,
+                    katakana_stemmer,
+                    kuromoji_neologd_part_of_speech,
+                    synonym,
+                    stopword
                 ]
             ja_ngram:
                 type: custom

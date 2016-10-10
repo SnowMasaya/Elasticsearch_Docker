@@ -103,27 +103,22 @@ RUN mkdir -p /usr/share/elasticsearch/shell
 #           Python Setting
 #################################################################################################################
 ADD shell/python/setting.sh /home/
-RUN echo "${elasticsearch_user_name}  ALL=(ALL)       ALL" >> /etc/sudoers && \
-    sh /home/setting.sh && \
+RUN sh /home/setting.sh && \
     groupadd pyenv && \
     chown -R :pyenv ${PYENV_ROOT} && \
     chmod -R g+w ${PYENV_ROOT} && \
     chmod g+s ${PYENV_ROOT} && \
     gpasswd -a ${elasticsearch_user_name} pyenv
 ADD template/python/pyenv.sh /etc/profile.d/
-RUN echo 'Defaults env_keep += /usr/local/pyenv' > /etc/sudoers && \
+RUN echo 'Defaults env_keep += /usr/local/pyenv' >> /etc/sudoers && \
     bash -lc '/usr/local/pyenv/bin/pyenv install -s -v ${PYTHON_VERSION}' && \
     bash -lc '/usr/local/pyenv/bin/pyenv rehash' && \
     echo ${PYTHON_VERSION} > ~/.python-version && \
     sh /etc/profile.d/pyenv.sh && \
     /usr/local/pyenv/bin/pyenv global ${PYTHON_VERSION} && \
-    /usr/local/pyenv/shims/python -m venv /usr/local/venv/${PYTHON_VERSION} && \
-    chmod -R g+w /usr/local/venv/${PYTHON_VERSION} && \
-    chown -R :pyenv /usr/local/venv/${PYTHON_VERSION &&} \
-    echo 'export PATH="/usr/local/venv/3.5.0/bin:$PATH"' > /root/.bashrc && \
-    echo 'export PATH="/usr/local/venv/3.5.0/bin:$PATH"' > ${elasticsearch_home}/.bashrc
-ADD pip3.6-requirement.txt /usr/share/elasticsearch/
-RUN cd /usr/share/elasticsearch/ && /usr/local/pyenv/shims/pip install -r pip3.6-requirement.txt
+    ln -s /usr/local/pyenv/shims/python3.5 /bin/python
+ADD pip3.5-requirement.txt /usr/share/elasticsearch/
+RUN cd /usr/share/elasticsearch/ && /usr/local/pyenv/shims/pip install -r pip3.5-requirement.txt
 #################################################################################################################
 #			Install parell for multi processing				#
 #################################################################################################################
@@ -138,14 +133,16 @@ RUN cd /usr/local && tar xvf parallel-20160322.tar.bz2  && \
 #################################################################################################################
 RUN mkdir -p /usr/share/elasticsearch/dict
 COPY conf/elasticsearch.yml /etc/elasticsearch/
+COPY conf/elasticsearch /etc/init.d/elasticsearch
+RUN chmod 555 /etc/init.d/elasticsearch
 COPY template/elastic_index_template.json /usr/share/elasticsearch/config/
-COPY shell/elastic_search_setting.sh \
-     shell/elastic_regist_search_json.sh \
+COPY shell/*.sh \
      /usr/share/elasticsearch/shell/
 COPY data/test_bulk_article.json /usr/share/elasticsearch/data
 COPY template/dict/userdict_ja.txt \
      template/dict/stopword.txt \
      template/dict/synonym.txt  \
      /usr/share/elasticsearch/dict/
+RUN chmod -R 777 /usr/share/elasticsearch
 USER elasticsearch
 EXPOSE 9200 9300 5601

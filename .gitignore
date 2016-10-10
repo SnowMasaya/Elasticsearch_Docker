@@ -91,3 +91,5 @@ ENV/
 # Setting elastic search
 .vagrant
 .idea
+Data/
+Data/*
