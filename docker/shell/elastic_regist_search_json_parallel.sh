@@ -23,7 +23,7 @@ PARALLEL=/usr/local/bin/parallel
 # Regist json bulk
 sudo chmod -R 777 ${DATA_DIR}/
 ls ${DATA_DIR}/*.json.gz > ${DATA_DIR}/json_gz_list
-cat ${DATA_DIR}/json_gz_list | $PARALLEL --linebuffer --pipe -N $PIPE_NUMBER --round-robin -j${PIPE_NUMBER} $PARALLEL --linebuffer -j $PARALLEL_NUMBER -a - sh shell/elastic_regist_search_json_gz.sh ::: 1
+cat ${DATA_DIR}/json_gz_list | $PARALLEL --linebuffer --pipe -N $PIPE_NUMBER --round-robin -j${PIPE_NUMBER} $PARALLEL --linebuffer -j $PARALLEL_NUMBER -a - sh shell/elastic_regist_search_json_gz.sh
 sleep 10s
 # Check the regist data
 curl 'localhost:9200/_cat/indices?v'
