@@ -15,7 +15,6 @@ sleep 10s
 # 文書登録用テンプレートの反映
 curl -XPUT localhost:9200/_template/contents --data-binary \
      "@config/elastic_index_template.json"
-sudo /etc/init.d/elasticsearch restart
 sleep 10s
 echo Register
 # 文書登録処理
@@ -29,7 +28,7 @@ echo Search
 # 文書検索処理
 curl -XGET 'localhost:9200/contents-20160111/contents/_search?pretty' -d'
 {
- "query":{"match":{"body_text":"Ubuntu"}}
+ "query":{"match":{"body_text":"環境"}}
 }'
 # 登録された文書の確認
 curl 'localhost:9200/_cat/indices?v'

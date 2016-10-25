@@ -3,6 +3,10 @@ FROM java:8-jre
 # REference
 #    http://qiita.com/nakamura-tsuyoshi/items/993a4f87bcef2be59db5#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%B5%81%E3%81%97%E8%BE%BC%E3%82%93%E3%81%A7%E3%81%BF%E3%82%8B
 #################################################################################################################
+ENV elasticsearch_user_name elasticsearch
+ENV elasticsearch_password e_pass
+ENV elasticsearch_home /usr/share/elasticsearch
+#################################################################################################################
 # grab gosu for easy step-down from root
 #################################################################################################################
 ENV GOSU_VERSION 1.7
@@ -83,9 +87,6 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 RUN cd mecab-ipadic-neologd && \
     ./bin/install-mecab-ipadic-neologd -y
 # setting dict /usr/lib/mecab/dic/mecab-ipadic-neologd
-ENV elasticsearch_user_name elasticsearch
-ENV elasticsearch_password e_pass
-ENV elasticsearch_home /usr/share/elasticsearch
 RUN echo ${elasticsearch_user_name}:${elasticsearch_password} | chpasswd
 RUN echo "elasticsearch  ALL=(ALL)       ALL" >> /etc/sudoers && \
     chown -R elasticsearch /usr/share/elasticsearch
@@ -101,12 +102,16 @@ RUN mkdir -p /usr/share/elasticsearch/shell
 #################################################################################################################
 RUN mkdir -p /usr/share/elasticsearch/dict
 COPY conf/elasticsearch.yml /etc/elasticsearch/
+COPY conf/elasticsearch /etc/init.d/elasticsearch
+RUN chmod 555 /etc/init.d/elasticsearch
 COPY template/elastic_index_template.json /usr/share/elasticsearch/config/
-COPY shell/elastic_search_setting.sh /usr/share/elasticsearch/shell
-COPY shell/elastic_regist_search_json.sh /usr/share/elasticsearch/shell
+COPY shell/*.sh \
+     /usr/share/elasticsearch/shell/
 COPY data/test_bulk_article.json /usr/share/elasticsearch/data
-COPY template/dict/userdict_ja.txt /usr/share/elasticsearch/dict
-COPY template/dict/stopword.txt /usr/share/elasticsearch/dict
-COPY template/dict/synonym.txt /usr/share/elasticsearch/dict
+COPY template/dict/userdict_ja.txt \
+     template/dict/stopword.txt \
+     template/dict/synonym.txt  \
+     /usr/share/elasticsearch/dict/
+RUN chmod -R 777 /usr/share/elasticsearch
 USER elasticsearch
 EXPOSE 9200 9300 5601
