@@ -93,3 +93,4 @@ ENV/
 .idea
 Data/
 Data/*
+enviroment_slack.yml
