@@ -98,6 +98,7 @@ THE SOFTWARE.
 ### References
 #
 >[Docker](https://www.docker.com/)<br>
+>[Python Slack](https://github.com/slackhq/python-slackclient)<br>
 >[Elasticsearch](https://www.elastic.co/products/elasticsearch)<br>
 >[Python Elasticsearch Client](https://elasticsearch-py.readthedocs.io/en/master/)<br>
 >[docker-project-template](https://github.com/ahawkins/docker-project-template)
