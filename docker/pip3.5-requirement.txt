@@ -1,1 +1,4 @@
 simplejson==3.8.2
+websocket-client==0.37.0
+future==0.15.2
+PyYAML==3.11

@@ -73,6 +73,7 @@ TAG=$(shell echo $$CIRCLE_SHA1 | cut -c 1-7)
 # correctly.
 DOCKER_RUN_ELASTIC_SEARCH:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -i -t $(REPO_NAME)/elasticsearch bash
 DOCKER_RUN_ELASTIC_SEARCH_PARALLEL:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -i -t $(REPO_NAME)/elasticsearch_parallel bash
+DOCKER_RUN_SLACK:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -i -t $(REPO_NAME)/slack bash
 
 # Wildcard rule to build an image from a file inside dockerfiles/
 # Use the tasks like any other dependency. Order may be controller
@@ -100,6 +101,9 @@ test-elastic-search: images/elasticsearch
 
 test-elastic-search_parallel: images/elasticsearch_parallel
 	$(DOCKER_RUN_ELASTIC_SEARCH_PARALLEL)
+
+test-slack: images/slack
+	$(DOCKER_RUN_SLACK)
 
 teardown:
 	$(DOCKER_COMPOSE) stop
