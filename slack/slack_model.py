@@ -10,7 +10,7 @@ class SlackModel():
         setting paramater Slack model
         :return:
         """
-        self.Slack = namedtuple("Slack", ["api_token", "channel", "user_name", "message", "icon_url"])
+        self.Slack = namedtuple("slack", ["api_token", "channel", "user_name", "message", "icon_url"])
         self.config_file = "enviroment_slack.yml"
         self.slack_channel = ""
         self.chan = ""
