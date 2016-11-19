@@ -24,8 +24,9 @@ class SlackApp():
         https://api.slack.com/methods/channels.list
         """
         self.chan = data_paramater.chan
-        self.usr = data_paramater.user
+        self.user_name = data_paramater.user_name
         self.message = data_paramater.message
+        self.icon_url = data_paramater.icon_url
 
     def call_method(self):
         """
@@ -51,7 +52,8 @@ class SlackApp():
         if len(self.data) >= 1 and "text" in self.data[0]:
             if "search_bot:" in self.data[0]["text"]:
                 word = self.message
-                print(self.slack_channel.api_call("chat.postMessage", user=self.usr, channel=self.chan, text=word))
+                print(self.slack_channel.api_call("chat.postMessage", username=self.user_name, channel=self.chan, text=word, \
+                                                  icon_url=self.icon_url))
 
 if __name__ == '__main__':
     data_paramater = SlackModel()
