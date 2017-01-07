@@ -1,0 +1,37 @@
+#################################################################################################################
+# Initial Setting
+#################################################################################################################
+FROM ubuntu:14.04
+ENV slack_user_name slack
+ENV slack_password s_pass
+ENV slack_home /usr/share/slack
+ENV PYTHON_VERSION 3.5.0
+ENV PYENV_ROOT /usr/local/pyenv
+#################################################################################################################
+#   Install Initial Paramater
+#################################################################################################################
+RUN apt-get update && apt-get install -y git gcc g++ vim python3-pip language-pack-ja-base language-pack-ja ibus-mozc nkf && \
+    update-locale LANG=ja_JP.UTF-8 LANGUAGE="ja_JP:ja"
+# Off the beep sound
+RUN echo set bell-style none >> /root/.inputrc
+
+RUN mkdir -p /usr/share/slack
+RUN useradd -b ${slack_home} -p ${slack_password} -d ${slack_home} ${slack_user_name} && \
+    echo ${slack_user_name}:${slack_password} | chpasswd && \
+    echo "slack  ALL=(ALL)       ALL" >> /etc/sudoers && \
+    chown -R slack /usr/share/slack
+#################################################################################################################
+#           Python Setting
+#################################################################################################################
+RUN rm -rf /usr/bin/python && \
+    ln -s /usr/bin/python3 /usr/bin/python
+ADD pip3.5-requirement.txt /usr/share/slack/
+RUN cd /usr/share/slack/ && /usr/bin/pip3 install -r pip3.5-requirement.txt
+#################################################################################################################
+#			COPY Setting Code in the Docker enviroment			#
+#################################################################################################################
+COPY slack /usr/share/slack
+RUN chmod -R 777 /usr/share/slack
+WORKDIR /usr/share/slack
+USER slack
+RUN . /etc/default/locale
