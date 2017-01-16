@@ -68,11 +68,10 @@ class SlackApp():
         :param input_text(string): input the search word
         :return(string): search result
         """
-        replace_input = re.sub("search_bot:|\?", "", input_text.strip())
+        replace_input = re.sub("search_bot:|\?|\？", "", input_text.strip())
         self.elastic_search.search_data(replace_input)
         if len(self.elastic_search.search_result) > 0:
             hyp_batch = self.elastic_search.search_result[0]
-            print(hyp_batch)
             word = hyp_batch["title"] + "\n" + hyp_batch["abstract"] + "\n" + hyp_batch["url"]
         else:
             word = "No match"

@@ -20,8 +20,8 @@ fi
 
 # ENV Viable
 ELS_CONTAINER_NAME="elasticsearch_dialogue"
-ELS_IMAGE_NAME="docker_common/elasticsearch_parallel"
-DIALOGUE_IMAGE_NAME="docker_common/slack_dialogue"
+ELS_IMAGE_NAME="masayaresearch/elasticsearch_japanese_parallel"
+DIALOGUE_IMAGE_NAME="masayaresearch/slack_dialogue"
 PIPE_NUMBER=$1
 PARALLEL_NUMBER=$2
 VAGRANT_DATA_DIR=/home/vagrant/elastic-search-docker_parallel/python

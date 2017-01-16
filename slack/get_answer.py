@@ -61,3 +61,18 @@ class GetAnswer():
               }
             }
         }
+
+        #self.query = {
+        #    "query": {
+        #      "bool": {
+        #        "should": [
+        #          {
+        #            "match": {
+        #              "title": {
+        #                "query": "\"" + search_key_word + "\""
+        #              }
+        #            }
+        #          }]
+        #      }
+        #    }
+        #}
